@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal del Desarrollador | SOFTIA.ES</title>
+    <!-- Hojas de estilos del proyecto -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+    <!-- Barra de Navegación: barra de navegación para la navegación fluida -->
+    <nav class="header-nav" aria-label="Navegación principal">
+        <div class="nav-container">
+            <!-- Logotipo de la marca -->
+            <a href="index.html" class="logo-brand" aria-label="SOFTIA.ES Inicio">
+                <span>SOFTIA.ES</span>
+            </a>
+            
+            <!-- Botón del menú hamburguesa para pantallas móviles -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Menú de enlaces de navegación principal requeridos por el enunciado -->
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Inicio</a></li>
+                <li><a href="entrada1.html" class="nav-link">ASP.NET Core 8</a></li>
+                <li><a href="entrada2.html" class="nav-link">Microservicios</a></li>
+                <li><a href="entrada3.html" class="nav-link">Seguridad JWT</a></li>
+                <!-- Botón interactivo de logout gestionado en main.js -->
+                <li><button class="btn-logout" id="logoutBtn">Cerrar Sesión</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <main class="main-content">
+
+        <!-- SECCIÓN DE BIENVENIDA: Banner principal con diseño corporativo degradado -->
+        <section class="welcome-banner" aria-labelledby="welcome-title">
+            <h2 id="welcome-title">Portal de Ingeniería & APIs</h2>
+            <p>Bienvenido al espacio de conocimiento técnico de SOFTIA.ES. Aquí encontrarás las últimas guías técnicas, estándares de arquitectura y tutoriales sobre desarrollo e integración de APIs corporativas basadas en .NET.</p>
+        </section>
+
+        <!-- Sección de controles de búsqueda, filtros de categorías y agregar contenido -->
+        <section class="toolbar" aria-label="Filtros y búsqueda de artículos">
+            <!-- Cuadro de búsqueda por texto en tiempo real -->
+            <div class="search-box">
+                <input 
+                    type="search" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Buscar tutoriales por título o palabra clave..."
+                    aria-label="Buscar artículos"
+                >
+            </div>
+            
+            <!-- Grupo de botones para filtrado dinámico por categoría -->
+            <div class="filters-group" id="categoryFilters">
+                <button class="btn-filter active" data-category="Todos">Todos</button>
+                <button class="btn-filter" data-category="Tutorial">Tutoriales</button>
+                <button class="btn-filter" data-category="Arquitectura">Arquitectura</button>
+                <button class="btn-filter" data-category="Seguridad">Seguridad</button>
+            </div>
+
+            <!-- Botón interactivo para abrir el formulario modal de nueva entrada  -->
+            <button class="btn-add-post" id="openModalBtn">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" style="margin-right: 4px;">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                Nueva Entrada
+            </button>
+        </section>
+
+        <!-- Contenedor dinámico cargado mediante JavaScript -->
+        <section aria-label="Listado de artículos del blog">
+            <div class="blog-grid" id="blogGrid">
+                <!-- Las tarjetas de los artículos se generan dinámicamente desde main.js -->
+            </div>
+        </section>
+
+        <!-- Tabla Comparativa: Tabla de datos estructurados sobre protocolos de APIs en .NET -->
+        <section class="table-section" aria-labelledby="table-title">
+            <h3 class="section-title" id="table-title">Comparativa Técnica: Protocolos de APIs en .NET</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">SOFTIA.ES promueve el uso del protocolo adecuado según el caso de uso del sistema. Analiza esta tabla comparativa para decidir la arquitectura de tu próximo proyecto:</p>
+            
+            <div class="table-wrapper">
+                <table class="tech-table">
+                    <caption>Tabla 1: Comparativa de protocolos de APIs e idoneidad en entornos corporativos .NET.</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Protocolo</th>
+                            <th scope="col">Formato de Datos</th>
+                            <th scope="col">Rendimiento en .NET</th>
+                            <th scope="col">Caso de Uso Principal</th>
+                            <th scope="col">Seguridad Nativa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>REST API</strong> (Minimal APIs)</td>
+                            <td>JSON / XML</td>
+                            <td><span class="table-badge good">Excelente</span> (Muy optimizado en .NET 8)</td>
+                            <td>Integración pública, aplicaciones web y móviles.</td>
+                            <td>JWT, OAuth2, HTTPS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>gRPC</strong> (HTTP/2)</td>
+                            <td>Protocol Buffers (Binario)</td>
+                            <td><span class="table-badge good">Ultra Alto</span> (Bajo uso de CPU/Red)</td>
+                            <td>Comunicación interna entre Microservicios back-to-back.</td>
+                            <td>TLS / SSL obligatorio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GraphQL</strong> (HotChocolate)</td>
+                            <td>JSON</td>
+                            <td><span class="table-badge neutral">Bueno</span> (Depende de queries complejas)</td>
+                            <td>Consolas de administración y agregación de datos dispersos.</td>
+                            <td>Políticas a nivel de campo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>WebSockets</strong> (SignalR)</td>
+                            <td>Texto / Binario</td>
+                            <td><span class="table-badge good">Excelente</span> (Baja latencia persistente)</td>
+                            <td>Notificaciones en tiempo real y chat interactivo.</td>
+                            <td>Tokens de conexión, HTTPS</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL para el alta de nuevas entradas al blog de SOFTIA -->
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <!-- Encabezado del modal con botón de cerrar -->
+            <header class="modal-header">
+                <h3 class="modal-title" id="modal-title">Publicar Nuevo Artículo Técnico</h3>
+                <button class="modal-close" id="closeModal" aria-label="Cerrar modal">&times;</button>
+            </header>
+            
+            <!-- Cuerpo del modal que contiene el formulario de creación -->
+            <form id="newPostForm">
+                <div class="modal-body">
+                    <!-- Campo: Título de la entrada -->
+                    <div class="form-group">
+                        <label for="postTitleInput" class="form-label">Título del Artículo</label>
+                        <input type="text" id="postTitleInput" class="form-input" placeholder="Ej. Arquitectura limpia en ASP.NET Core" required>
+                    </div>
+
+                    <!-- Fila de dos campos: Categoría y Autor -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="postCategorySelect" class="form-label">Categoría</label>
+                            <select id="postCategorySelect" class="form-input" style="background-color: var(--surface); color: var(--text-primary);" required>
+                                <option value="Tutorial">Tutorial</option>
+                                <option value="Arquitectura">Arquitectura</option>
+                                <option value="Seguridad">Seguridad</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="postAuthorInput" class="form-label">Nombre del Autor</label>
+                            <input type="text" id="postAuthorInput" class="form-input" placeholder="Ej. Ing. Diana Pérez" required>
+                        </div>
+                    </div>
+
+                    <!-- Campo: Imagen del post (Opcional, tiene por defecto) -->
+                    <div class="form-group">
+                        <label for="postImageInput" class="form-label">URL de la Imagen Descriptiva (Opcional)</label>
+                        <input type="url" id="postImageInput" class="form-input" placeholder="Ej. https://images.unsplash.com/photo-...">
+                    </div>
+
+                    <!-- Campo: Resumen corto de la entrada -->
+                    <div class="form-group">
+                        <label for="postSummaryInput" class="form-label">Resumen Breve (Aparece en la tarjeta)</label>
+                        <input type="text" id="postSummaryInput" class="form-input" placeholder="Ej. Descubre cómo configurar CORS de forma eficiente..." required>
+                    </div>
+
+                    <!-- Campo: Contenido completo del post -->
+                    <div class="form-group">
+                        <label for="postContentInput" class="form-label">Cuerpo del Artículo (Soporta bloques con ``` para código)</label>
+                        <textarea id="postContentInput" class="form-input" rows="8" placeholder="Redacte aquí el contenido técnico completo de su publicación..." required style="resize: vertical; min-height: 100px;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Botones de control inferiores -->
+                <footer class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelModalBtn">Cancelar</button>
+                    <button type="submit" class="btn-primary" style="width: auto;">Publicar Artículo</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <!-- Botón para volver arriba: botón dinámico que aparece al hacer scroll hacia abajo -->
+    <button class="btn-back-to-top" id="btnBackToTop" aria-label="Volver al inicio de la página">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+        </svg>
+    </button>
+
+    <!-- Pie de Página Global de SOFTIA -->
+    <footer class="footer">
+        <p>&copy; 2026 SOFTIA.ES - Soluciones Avanzadas de APIs en .NET. Todos los derechos reservados.</p>
+        <p>Desarrollo web académico para el módulo de <em>Desarrollo de Aplicaciones en Red</em> (UNIR).</p>
+        <!-- Enlaces con ruta vacía requeridos por la rúbrica -->
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+            <a href="#" class="footer-link">Términos del Servicio</a> | 
+            <a href="#" class="footer-link">Política de Privacidad</a> | 
+            <a href="#" class="footer-link">Soporte Técnico</a>
+        </p>
+    </footer>
+
+    <!-- Logica de control -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

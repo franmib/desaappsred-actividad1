@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso del Personal | SOFTIA.ES</title>    
+    <!-- Hojas de estilos del proyecto -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="login-body">
+
+    <!-- FORMULARIO DE ACCESO: Contenedor principal con efecto glassmorphism -->
+    <main class="login-wrapper" aria-labelledby="login-title">
+        
+        <!-- CABECERA DEL FORMULARIO: Logotipo corporativo de SOFTIA.ES y subtítulo -->
+        <header class="login-header">
+            <!-- Representación en texto del logo corporativo de la empresa -->
+            <div class="logo-brand" style="justify-content: center; margin-bottom: 1rem; font-size: 2rem;">
+                <span>SOFTIA.ES</span>
+            </div>
+            <h1 id="login-title">Portal de Desarrolladores</h1>
+            <p>Inicia sesión para publicar artículos y consultar tutoriales técnicos de APIs</p>
+        </header>
+
+        <!-- ALERTA DE VALIDACIÓN: Div dinámico controlado por JavaScript para avisos de error/éxito -->
+        <div class="login-alert" id="loginAlert" role="alert" aria-live="polite"></div>
+
+        <!-- FORMULARIO INTERACTIVO: Captura credenciales validadas localmente en main.js -->
+        <form id="loginForm" autocomplete="on">
+            <!-- Campo de entrada para el correo electrónico del administrador -->
+            <div class="form-group">
+                <label for="emailInput" class="form-label">Correo Electrónico Corporativo</label>
+                <input 
+                    type="email" 
+                    id="emailInput" 
+                    class="form-input" 
+                    placeholder="ejemplo@softia.es" 
+                    required 
+                    autocomplete="username"
+                    aria-required="true"
+                    value="admin@softia.es"
+                >
+            </div>
+
+            <!-- Campo de entrada para la contraseña de seguridad -->
+            <div class="form-group">
+                <label for="passwordInput" class="form-label">Contraseña de Seguridad</label>
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    class="form-input" 
+                    placeholder="••••••••••••" 
+                    required 
+                    autocomplete="current-password"
+                    aria-required="true"
+                    value="dotnet2026"
+                >
+            </div>
+
+            <!-- Botón de envío que desencadena la lógica de autenticación en JavaScript -->
+            <button type="submit" class="btn-primary" id="submitLoginBtn">
+                Acceder al Portal
+            </button>
+        </form>
+
+        <!-- PIE DE PÁGINA DEL LOGIN: Proporciona credenciales de prueba para el profesor -->
+        <footer style="margin-top: 2rem; font-size: 0.8rem; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+            <p><strong>Credenciales de prueba:</strong></p>
+            <p>Usuario: <code>admin@softia.es</code></p>
+            <p>Contraseña: <code>dotnet2026</code></p>
+        </footer>
+
+    </main>
+
+    <!-- ARCHIVO JAVASCRIPT GLOBAL: Controla las validaciones y redirecciones del login -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

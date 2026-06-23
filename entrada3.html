@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asegurando APIs con OAuth2 y JWT en .NET | SOFTIA.ES</title>    
+    <!-- Hojas de estilos del proyecto -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<!-- Identificador del post para la persistencia de comentarios en localStorage -->
+<body data-postid="3">
+
+    <!-- BARRA DE NAVEGACIÓN GLOBAL -->
+    <nav class="header-nav" aria-label="Navegación principal">
+        <div class="nav-container">
+            <a href="index.html" class="logo-brand" aria-label="SOFTIA.ES Inicio">
+                <span>SOFTIA.ES</span>
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="entrada1.html" class="nav-link">ASP.NET Core 8</a></li>
+                <li><a href="entrada2.html" class="nav-link">Microservicios</a></li>
+                <li><a href="entrada3.html" class="nav-link active">Seguridad JWT</a></li>
+                <li><button class="btn-logout" id="logoutBtn">Cerrar Sesión</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENEDOR DEL DETALLE DEL ARTÍCULO -->
+    <main class="main-content">
+        <article class="article-wrapper" aria-labelledby="post-title">
+            
+            <!-- CABECERA DEL POST: Metadatos e Información de la Autora -->
+            <header class="article-header">
+                <div class="article-meta-top">
+                    <span class="article-category">Seguridad</span>
+                    <time datetime="2026-06-05">5 de Junio, 2026</time>
+                    <span>&bull; 10 min de lectura</span>
+                </div>
+                <h1 class="article-title" id="post-title">Asegurando APIs con OAuth2 y JWT en .NET</h1>
+                
+                <div class="article-author-card">
+                    <div class="author-info">
+                        <h4>Por: Mtr. Alejandro Torres</h4>
+                        <p>Especialista de Ciberseguridad en SOFTIA.ES</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- IMAGEN DESTACADA DEL ARTÍCULO (MULTIMEDIA) -->
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80" alt="Pantallas con esquemas de seguridad informática en un centro de operaciones" class="article-hero-img">
+
+            <!-- CUERPO EXPOSITIVO DEL ARTÍCULO -->
+            <div class="article-body">
+                <p>Proteger los datos corporativos y controlar quién tiene acceso a los recursos expuestos por una API es uno de los pilares del desarrollo de software seguro. En el desarrollo moderno de aplicaciones distribuidas, la arquitectura sin estado (stateless) es la más recomendada, y la autenticación basada en **JSON Web Tokens (JWT)** junto al marco de autorización **OAuth2** constituye el estándar de la industria.</p>
+
+                <h2>1. ¿Qué es un JSON Web Token (JWT)?</h2>
+                <p>Un token JWT es un objeto JSON codificado en base64 que se envía en la cabecera `Authorization` de las peticiones HTTP mediante el esquema `Bearer`. Este token se compone de tres partes diferenciadas separadas por puntos:</p>
+                <ul>
+                    <li><strong>Header (Cabecera)</strong>: Especifica el tipo de token y el algoritmo de firma hash utilizado (ej. HMAC SHA256 o RSA).</li>
+                    <li><strong>Payload (Carga Útil)</strong>: Contiene los "Claims" o declaraciones que representan los datos del usuario (roles, identificador, tiempo de expiración del token).</li>
+                    <li><strong>Signature (Firma)</strong>: Permite al servidor web validar que el token es legítimo y que no ha sido alterado por un intermediario en el camino.</li>
+                </ul>
+
+                <h2>2. Configuración de JWT Bearer en ASP.NET Core 8</h2>
+                <p>Configurar la autenticación JWT en C# requiere añadir y configurar el middleware correspondiente. A continuación, se presenta la sección clave de registro de servicios en el archivo `Program.cs`:</p>
+
+                <!-- Bloque de código C# (Código formateado) -->
+                <pre class="code-block"><code>using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Registro de autenticación JWT
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "https://identity.softia.es",
+        ValidAudience = "https://api.softia.es",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ClaveSecretaSuperProtegidaDeSOFTIADe256Bits"))
+    };
+});
+
+var app = builder.Build();
+app.UseAuthentication(); // Activa el middleware de autenticación
+app.UseAuthorization();  // Activa el middleware de autorización</code></pre>
+
+                <h2>3. Comparativa de Algoritmos de Firma para JWT</h2>
+                <p>Elegir el algoritmo adecuado influye tanto en la seguridad como en la sobrecarga computacional del servidor. La siguiente tabla compara los algoritmos soportados en .NET:</p>
+
+                <!-- Tabla Técnica del Artículo (Requisito Obligatorio) -->
+                <table class="tech-table">
+                    <caption>Tabla 4: Análisis de algoritmos criptográficos para la firma de JSON Web Tokens en .NET.</caption>
+                    <thead>
+                        <tr>
+                            <th>Algoritmo</th>
+                            <th>Tipo de Clave</th>
+                            <th>Nivel de Seguridad</th>
+                            <th>Velocidad de Firma</th>
+                            <th>Complejidad de Manejo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HS256 (HMAC SHA-256)</td>
+                            <td>Simétrica (Secreta compartida)</td>
+                            <td><span class="table-badge neutral">Bueno</span> (Requiere claves largas)</td>
+                            <td><span class="table-badge good">Ultra Rápido</span></td>
+                            <td>Baja</td>
+                        </tr>
+                        <tr>
+                            <td>RS256 (RSA con SHA-256)</td>
+                            <td>Asimétrica (Pública / Privada)</td>
+                            <td><span class="table-badge good">Muy Alto</span></td>
+                            <td><span class="table-badge neutral">Moderado</span> (Alto uso de CPU)</td>
+                            <td>Media (Rotación de certificados)</td>
+                        </tr>
+                        <tr>
+                            <td>ES256 (ECDSA P-256 y SHA-256)</td>
+                            <td>Asimétrica (Curva Elíptica)</td>
+                            <td><span class="table-badge good">Excelente</span> (Seguridad fuerte con claves cortas)</td>
+                            <td><span class="table-badge good">Rápido</span></td>
+                            <td>Alta</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SECCIÓN: ELEMENTO EXTERNO INCRUSTADO (Requisito Obligatorio)
+                 Incrustamos la ubicación del Centro de Ciberseguridad de SOFTIA en Valencia -->
+            <section class="embedded-section" aria-labelledby="embed-title">
+                <h3 id="embed-title" style="font-size: 1.15rem; margin-bottom: 1rem;">Nuestra Sede de Auditoría y Ciberseguridad (Valencia)</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Las auditorías de código seguro, testing de vulnerabilidades en APIs y soporte técnico de JWT se llevan a cabo en nuestro centro de Valencia:</p>
+                <div class="embedded-wrapper">
+                    <!-- Google Maps Iframe Incrustado -->
+                    <iframe 
+                        title="Google Maps Location - SOFTIA Valencia Security Center"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3079.865324546543!2d-0.37628818463255154!3d39.47023887948598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6048b25fcf2bf7%3A0x6b10705a6064fcf3!2sPlaza%20del%20Ayuntamiento%2C%20Valencia!5e0!3m2!1ses!2ses!4v1655900000002!5m2!1ses!2ses" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                </div>
+            </section>
+
+            <!-- ENLACE ADICIONAL (Para cumplir con la rúbrica sobre enlaces funcionales o vacíos) -->
+            <div style="text-align: center; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
+                <a href="index.html" class="btn-secondary" style="display: inline-block;">&larr; Volver al Portal Técnico</a>
+            </div>
+
+        </article>
+
+        <!-- SECCIÓN INTERACTIVA DE COMENTARIOS -->
+        <section class="comments-section" aria-labelledby="comments-title">
+            <h3 id="comments-title" style="font-size: 1.35rem; margin-bottom: 1.5rem;">Sección de Comentarios</h3>
+            
+            <form id="commentForm" class="comment-form">
+                <h4 style="font-size: 0.95rem; margin-bottom: 1rem;">Comparte tu opinión o duda técnica</h4>
+                <div class="form-group">
+                    <label for="commentNameInput" class="form-label">Nombre Completo</label>
+                    <input type="text" id="commentNameInput" class="form-input" placeholder="Ej. Ing. Laura Méndez" required>
+                </div>
+                <div class="form-group">
+                    <label for="commentTextInput" class="form-label">Comentario</label>
+                    <textarea id="commentTextInput" class="form-input" rows="4" placeholder="Escribe aquí tu duda sobre la firma de tokens JWT o asimetrías de claves..." required style="resize: vertical;"></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width: auto; padding: 0.65rem 1.5rem;">Enviar Comentario</button>
+            </form>
+
+            <div class="comments-list" id="commentsList">
+                <!-- Se poblará con JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- BOTÓN VOLVER ARRIBA -->
+    <button class="btn-back-to-top" id="btnBackToTop" aria-label="Volver al inicio de la página">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+        </svg>
+    </button>
+
+    <!-- PIE DE PÁGINA GLOBAL -->
+    <footer class="footer">
+        <p>&copy; 2026 SOFTIA.ES - Soluciones Avanzadas de APIs en .NET. Todos los derechos reservados.</p>
+        <p>Desarrollo web académico para el módulo de <em>Desarrollo de Aplicaciones en Red</em> (UNIR).</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+            <a href="#" class="footer-link">Términos del Servicio</a> | 
+            <a href="#" class="footer-link">Política de Privacidad</a> | 
+            <a href="#" class="footer-link">Soporte Técnico</a>
+        </p>
+    </footer>
+
+    <!-- LOGICA DE CONTROL DE JAVASCRIPT -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

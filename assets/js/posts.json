@@ -1,0 +1,35 @@
+[
+  {
+    "id": "1",
+    "title": "Diseñando APIs REST con ASP.NET Core 8",
+    "category": "Tutorial",
+    "author": "Ing. Carlos Mendoza",
+    "date": "2026-06-15",
+    "readTime": "8 min",
+    "summary": "Explora las novedades de ASP.NET Core 8, la inyección de dependencias nativa y cómo estructurar Minimal APIs de alto rendimiento con arquitectura limpia.",
+    "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
+    "url": "entrada1.html"
+  },
+  {
+    "id": "2",
+    "title": "Microservicios y APIs en entornos .NET",
+    "category": "Arquitectura",
+    "author": "Dra. Sofía Rivas",
+    "date": "2026-06-10",
+    "readTime": "12 min",
+    "summary": "Guía completa para la orquestación de servicios en .NET usando API Gateways como YARP y Ocelot, y cómo gestionar la comunicación asíncrona mediante colas de mensajería.",
+    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+    "url": "entrada2.html"
+  },
+  {
+    "id": "3",
+    "title": "Asegurando APIs con OAuth2 y JWT en .NET",
+    "category": "Seguridad",
+    "author": "Mtr. Alejandro Torres",
+    "date": "2026-06-05",
+    "readTime": "10 min",
+    "summary": "Aprende a proteger tus endpoints en ASP.NET Core aplicando autenticación basada en tokens JWT, políticas de autorización robustas y flujos seguros de OAuth2.",
+    "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
+    "url": "entrada3.html"
+  }
+]
